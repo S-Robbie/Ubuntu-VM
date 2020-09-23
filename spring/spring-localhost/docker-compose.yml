@@ -1,0 +1,30 @@
+version: "3"
+services:
+  employee-jdbc:
+    image: spring-datasource:latest
+    ports:
+      - "8467:8081"
+    networks:
+      - employee-mysql
+    environment:
+      - DATASOURCE_NAME=mysql-dev-server
+    depends_on:
+      - mysql-dev-server      
+  
+  mysql-dev-server:
+    image: mysql:5.7
+    networks:
+      - employee-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bootdb  
+      - MYSQL_USER=test  
+      - MYSQL_PASSWORD=test
+    volumes:
+      - "mysqlvol:/var/lib/mysql"      
+
+volumes:
+  mysqlvol:      
+
+networks:
+  employee-mysql:

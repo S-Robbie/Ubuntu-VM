@@ -1,0 +1,28 @@
+version: "3"
+services:
+  employee-jdbc:
+    image: robin2310/sprng-boot:latest
+    ports:
+      - "8084:8081"
+    networks:
+      - employee-mysql
+    depends_on:
+      - mysql-dev-server
+ 
+  mysql-dev-server:
+    image: mysql:5.7
+    networks:
+      - employee-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bootdb  
+      - MYSQL_USER=test  
+      - MYSQL_PASSWORD=test
+    volumes:
+      - "mysqlvol:/var/lib/mysql"      
+
+volumes:
+  mysqlvol:      
+
+networks:
+  employee-mysql:
